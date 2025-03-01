@@ -1,3 +1,5 @@
+name: demo
+
 x-common-fields: &x-common-fields
   ports:
     - 8080
