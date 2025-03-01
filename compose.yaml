@@ -34,3 +34,8 @@ services:
   go:
     <<: *x-go-service
     scale: 2
+  
+  lgtm:
+    image: grafana/otel-lgtm:0.8.6
+    ports:
+      - '127.0.0.1:3000:3000'
