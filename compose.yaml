@@ -1,0 +1,36 @@
+x-common-fields: &x-common-fields
+  ports:
+    - 8080
+  deploy:
+    resources:
+      limits:
+        cpus: '0.25'
+        memory: 64M
+      reservations:
+        cpus: '0.05'
+        memory: 32M
+
+x-python-service: &x-python-service
+  build: ./python
+  volumes:
+    - ./python:/app
+  working_dir: /app
+  command: sleep infinity
+  <<: *x-common-fields
+
+x-go-service: &x-go-service
+  build: ./go
+  volumes:
+    - ./go:/app
+  working_dir: /app
+  command: sleep infinity
+  <<: *x-common-fields
+
+services:
+  py:
+    <<: *x-python-service
+    scale: 2
+  
+  go:
+    <<: *x-go-service
+    scale: 2
