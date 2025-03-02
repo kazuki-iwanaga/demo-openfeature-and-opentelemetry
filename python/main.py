@@ -1,17 +1,13 @@
-from openfeature import api
-from openfeature.provider.in_memory_provider import InMemoryFlag, InMemoryProvider
+from fastapi import FastAPI
+import httpx
 
-# flags defined in memory
-my_flags = {
-  "v2_enabled": InMemoryFlag("on", {"on": True, "off": False})
-}
+app = FastAPI()
 
-# configure a provider
-api.set_provider(InMemoryProvider(my_flags))
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
-# create a client
-client = api.get_client()
-
-# get a bool flag value
-flag_value = client.get_boolean_value("v2_enabled", False)
-print("Value: " + str(flag_value))
+@app.get("/ping/{target}")
+async def ping(target: str):
+    response = httpx.get(f"http://{target}:8080/")
+    return {"target": target, "response": response.text}

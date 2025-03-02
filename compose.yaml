@@ -17,7 +17,7 @@ x-python-service: &x-python-service
   volumes:
     - ./python:/app
   working_dir: /app
-  command: sleep infinity
+  # command: sleep infinity
   <<: *x-common-fields
 
 x-go-service: &x-go-service
